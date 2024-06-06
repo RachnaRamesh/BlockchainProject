@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Electronic Health Record</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .form-container, .output-container, .about-container, .contact-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-control {
+            border-radius: 4px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+        }
+        .output-container h3, .output-container h4 {
+            color: #007bff;
+        }
+        .navbar {
+            margin-bottom: 20px;
+            background-color: #007bff;
+            color: white;
+        }
+        .navbar a {
+            color: white;
+        }
+        footer {
+            margin-top: 20px;
+            padding: 10px 0;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+        }
+        section {
+            padding: 60px 0;
+        }
+        .header-section {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .header-section h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .header-section p {
+            font-size: 1.2em;
+        }
+        .about-container p, .contact-container p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="static/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt=""> EHR System
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#records">Records</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="header-section">
+        <div class="container">
+            <h2>Patient Electronic Health Record</h2>
+            <p>Efficiently manage and access patient health records with ease and security.</p>
+            <button id="connectButton" class="btn btn-primary">Connect MetaMask</button>
+            <p id="accountDisplay"></p>
+            <p id="networkDisplay"></p>
+            <p id="balanceDisplay"></p>
+            <p id="codeDisplay"></p>
+        </div>
+    </section>
+
+    <section id="records" class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 form-container">
+                <h3>Submit Patient Record</h3>
+                <p>Fill out the form below to add a new patient record to the system.</p>
+                <form action="/" method="POST">
+                    <div class="form-group">
+                        <label for="PatientID">Patient ID</label>
+                        <input type="text" class="form-control" id="PatientID" name="PatientID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Details">Details</label>
+                        <input type="text" class="form-control" id="Details" name="Details" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="HospitalName">Hospital Name</label>
+                        <input type="text" class="form-control" id="HospitalName" name="HospitalName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Diagnosis">Diagnosis</label>
+                        <input type="text" class="form-control" id="Diagnosis" name="Diagnosis" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="patient-records" class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 output-container" id="output">
+                <h3>Patient Records</h3>
+                <p>Below are the records of patients submitted to the system.</p>
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Details</th>
+                            <th>Hospital Name</th>
+                            <th>Diagnosis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in patient_list %}
+                        <tr>
+                            <td>{{ record[0] }}</td>
+                            <td>{{ record[1] }}</td>
+                            <td>{{ record[2] }}</td>
+                            <td>{{ record[3] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container about-container text-center">
+        <h2>About</h2>
+        <p>This Electronic Health Record (EHR) System is designed to provide a seamless and secure platform for managing patient health records. Our goal is to enhance the efficiency and accuracy of health information management.</p>
+    </section>
+
+    <section id="contact" class="container contact-container text-center">
+        <h2>Contact</h2>
+        <p>For any inquiries, please contact us at <a href="mailto:contact@ehrsystem.com">contact@ehrsystem.com</a> or call us at (123) 456-7890. We are here to assist you with any questions or support you may need.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 EHR System. All rights reserved.</p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const connectButton = document.getElementById('connectButton');
+            const accountDisplay = document.getElementById('accountDisplay');
+            const networkDisplay = document.getElementById('networkDisplay');
+            const balanceDisplay = document.getElementById('balanceDisplay');
+            const codeDisplay = document.getElementById('codeDisplay');
+
+            connectButton.addEventListener('click', async () => {
+                if (typeof window.ethereum !== 'undefined') {
+                    try {
+                        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                        const account = accounts[0];
+                        accountDisplay.textContent = 'Connected account: ' + account;
+
+                        const web3 = new Web3(window.ethereum);
+                        
+                        // Get the current network
+                        const networkId = await web3.eth.net.getId();
+                        let networkName = 'Unknown';
+                        switch (networkId) {
+                            case 1:
+                                networkName = 'Mainnet';
+                                break;
+                            case 3:
+                                networkName = 'Ropsten';
+                                break;
+                            case 4:
+                                networkName = 'Rinkeby';
+                                break;
+                            case 5:
+                                networkName = 'Goerli';
+                                break;
+                            case 42:
+                                networkName = 'Kovan';
+                                break;
+                            default:
+                                networkName = 'Unknown';
+                        }
+                        networkDisplay.textContent = 'Network: ' + networkName;
+
+                        // Get the balance
+                        const balance = await web3.eth.getBalance(account);
+                        const ethBalance = web3.utils.fromWei(balance, 'ether');
+                        balanceDisplay.textContent = 'Balance: ' + ethBalance + ' ETH';
+
+                        // Generate a code/address (e.g., a hash of the account)
+                        const code = web3.utils.sha3(account + Date.now());
+                        codeDisplay.textContent = 'Generated Code: ' + code;
+
+                    } catch (error) {
+                        console.error('Error connecting to MetaMask:', error);
+                        accountDisplay.textContent = 'Error connecting to MetaMask.';
+                    }
+                } else {
+                    accountDisplay.textContent = 'MetaMask not detected. Please install MetaMask and try again.';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
