@@ -1,2 +1,2 @@
 # BlockchainProject
-Blockchain 20 marks component
+Blockchain project - Patient Electronic Health Record using Blockchain
